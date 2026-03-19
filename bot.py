@@ -83,7 +83,7 @@ app.add_handler(CommandHandler("seguir", seguir))
 app.add_handler(CommandHandler("lista", lista))
 
 # IMPORTANTE: pon tu chat_id aquí
-CHAT_ID = "TU_CHAT_ID"
+CHAT_ID = 7224437900
 
 import asyncio
 asyncio.create_task(check_games(app))
