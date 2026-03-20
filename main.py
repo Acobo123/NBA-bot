@@ -1,5 +1,4 @@
 import os
-import asyncio
 import aiohttp
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
@@ -64,7 +63,11 @@ async def monitor(context: ContextTypes.DEFAULT_TYPE):
             game_id = g["id"]
 
             diff = abs(home_score - visitor_score)
-            leader = g["home_team"]["name"] if home_score > visitor_score else g["visitor_team"]["name"]
+
+            if home_score > visitor_score:
+                leader = g["home_team"]["name"]
+            else:
+                leader = g["visitor_team"]["name"]
 
             # 🔥 CONDICIÓN
             if diff >= 12 and period <= 2 and game_id not in alerts_sent:
@@ -74,7 +77,7 @@ async def monitor(context: ContextTypes.DEFAULT_TYPE):
                     f"🚨 ALERTA NBA\n\n"
                     f"{leader} dominando\n"
                     f"Diferencia: {diff}\n"
-                    f"Periodo: Q{period}\n"
+                    f"Periodo: Q{period}\n\n"
                     f"{g['home_team']['name']} {home_score} - {visitor_score} {g['visitor_team']['name']}"
                 )
 
@@ -84,20 +87,19 @@ async def monitor(context: ContextTypes.DEFAULT_TYPE):
         print("Error monitor:", e)
 
 
-# 🔹 MAIN
-async def main():
+# 🔥 MAIN (YA CORRECTO)
+def main():
     app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("seguir", seguir))
     app.add_handler(CommandHandler("lista", lista))
 
-    # 🔁 cada 30 segundos
     app.job_queue.run_repeating(monitor, interval=30, first=5)
 
     print("Bot corriendo 🔥")
-    await app.run_polling()
+    app.run_polling()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
