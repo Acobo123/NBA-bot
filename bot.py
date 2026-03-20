@@ -4,7 +4,7 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 API_KEY = 78aef0d4-780d-4848-a6fb-00a10b13db61
-TELEGRAM_TOKEN = 8655761892:AAGykWvq_OqhegDgEloKntAsE4qPVxaH-oo
+TELEGRAM_TOKEN = 8655761892:AAGtkRlWXUHPo9CeEHXfweOZ-Z0YkwbZDyo
 
 games_to_watch = []
 alerts_sent = set()
